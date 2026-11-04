@@ -1,0 +1,40 @@
+@base = http://localhost:8080
+
+### Доступность
+GET {{base}}/ping
+
+### Собственник
+GET {{base}}/users/1
+
+### SCD 1 / SCD 3
+PATCH {{base}}/users/1
+Content-Type: application/json
+
+{"fio":"Петрова Анна Сергеевна","phone":"+79111111111"}
+
+### Объект
+GET {{base}}/realty/1
+
+### Передача и корректировка показания
+POST {{base}}/realty/1/readings
+Content-Type: application/json
+
+{"user_id":1,"gauge_id":1,"tariff_id":1,"reading_date":"2026-10-01","day_kw":1250,"night_kw":300}
+
+### Показания за период
+GET {{base}}/realty/1/readings?date_from=2026-10-01&date_to=2026-10-31
+
+### Счета
+GET {{base}}/realty/1/invoices?limit=10&offset=0
+
+### Тариф до и после перехода
+GET {{base}}/tariffs?date=2026-10-31
+
+###
+GET {{base}}/tariffs?date=2026-11-01
+
+### Замена счётчика
+POST {{base}}/realty/1/gauges
+Content-Type: application/json
+
+{"gauge_id":2}

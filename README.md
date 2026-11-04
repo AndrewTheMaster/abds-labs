@@ -367,8 +367,9 @@ docker compose exec clickhouse clickhouse-client --query \
 
 ## CI
 
-В репозитории есть workflow `.github/workflows/energosbyt.lab.yml`, который
-вызывает переиспользуемый workflow первой лабораторной работы курса.
+Шаблонный workflow `.github/workflows/energosbyt.lab.yml` оставлен без изменений.
+Он читает `LAB=1` из `.labrc` и вызывает переиспользуемую проверку курса
+`sitnikovik/abds/.github/workflows/energosbyt.lab.yml@master`.
 Проверка выполняет `make run`, затем `make setup` с таймаутом 5 минут,
 запускает автограйдер и останавливает контейнеры через `docker compose down -v`.
 Ручная настройка не требуется: генератор использует только `python3`, а все

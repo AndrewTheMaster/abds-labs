@@ -10,12 +10,12 @@ import urllib.request
 from datetime import datetime, timedelta
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-DATABASE = os.environ.get("CLICKHOUSE_DATABASE", "energosbyt")
-CLICKHOUSE_HOST = os.environ.get("CLICKHOUSE_HOST", "localhost")
-CLICKHOUSE_HTTP_PORT = os.environ.get("CLICKHOUSE_HTTP_PORT", "8123")
-CLICKHOUSE_USER = os.environ.get("CLICKHOUSE_USER", "default")
-CLICKHOUSE_PASSWORD = os.environ.get("CLICKHOUSE_PASSWORD", "")
-APP_PORT = int(os.environ.get("APP_PORT", "8080"))
+DATABASE = os.environ["CLICKHOUSE_DATABASE"]
+CLICKHOUSE_HOST = os.environ["CLICKHOUSE_HOST"]
+CLICKHOUSE_HTTP_PORT = os.environ["CLICKHOUSE_HTTP_PORT"]
+CLICKHOUSE_USER = os.environ["CLICKHOUSE_USER"]
+CLICKHOUSE_PASSWORD = os.environ["CLICKHOUSE_PASSWORD"]
+APP_PORT = int(os.environ["APP_PORT"])
 
 DATE_FORMAT = "%Y-%m-%d"
 DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"

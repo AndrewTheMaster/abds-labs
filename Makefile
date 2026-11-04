@@ -1,29 +1,26 @@
-SHELL := /bin/bash
-COMPOSE := docker compose --env-file .env.local
-
 .PHONY: run rund services stop clean wait gen load schema setup teardown logs
 
-.DEFAULT_GOAL := run
+.DEFAULT_GOAL = run
 
 # Runs all services in detached mode.
 run:
-	$(COMPOSE) up -d --build
+	docker compose --env-file .env.local up -d --build
 
 # Runs all services without detached mode (for debugging).
 rund:
-	$(COMPOSE) up --build
+	docker compose --env-file .env.local up --build
 
 # Shows all service statuses.
 services:
-	$(COMPOSE) ps
+	docker compose --env-file .env.local ps
 
-# Stops all running services, keeping the ClickHouse data volume.
+# Stops all running services.
 stop:
-	$(COMPOSE) down
+	docker compose --env-file .env.local down
 
-# Stops all services and removes Docker volumes.
+# Cleans up all resources including volumes.
 clean:
-	$(COMPOSE) down -v
+	docker compose --env-file .env.local down -v
 
 # Waits until ClickHouse answers on the published HTTP port.
 wait:
@@ -63,4 +60,4 @@ teardown: wait
 
 # Shows service logs.
 logs:
-	$(COMPOSE) logs
+	docker compose --env-file .env.local logs

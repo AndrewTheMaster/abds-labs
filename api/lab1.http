@@ -1,0 +1,50 @@
+@base = http://localhost:8080
+
+### Доступность
+# Ответ: 200, пустое тело
+GET {{base}}/ping
+
+### Собственник
+# Ответ: 200 {"id":1,"fio":"...","phone":"...","phone_prev":""}
+GET {{base}}/users/1
+
+### SCD 1 / SCD 3
+# Ответ: 204, пустое тело; 400 {"message":"invalid \"fio\" field"}
+PATCH {{base}}/users/1
+Content-Type: application/json
+
+{"fio":"Петрова Анна Сергеевна","phone":"+79111111111"}
+
+### Объект
+# Ответ: 200 {"id":1,"address":"г. Москва, ул. Пушкина, д. 1","square":42,"type":"flat","number":"101","rooms":4,"floor":8,"porch":6}
+GET {{base}}/realty/1
+
+### Передача и корректировка показания
+# Ответ: 201, пустое тело; 404 {"message":"Not found"}
+POST {{base}}/realty/1/readings
+Content-Type: application/json
+
+{"user_id":1,"gauge_id":1,"tariff_id":1,"reading_date":"2026-10-01","day_kw":1250,"night_kw":300}
+
+### Показания за период
+# Ответ: 200 {"readings":[{"reading_date":"2026-10-01","user_id":1,"tariff_id":1,"gauge_id":1,"day_kw":1250,"night_kw":300}],"count":1}
+GET {{base}}/realty/1/readings?date_from=2026-10-01&date_to=2026-10-31
+
+### Счета
+# Ответ: 200 {"invoices":[{"tariff_id":1,"gauge_id":1,"day_kw":839,"night_kw":334,"price":684080,"deadline":"2026-11-10","created_at":"2026-10-27 10:00:00"}],"count":36}
+GET {{base}}/realty/1/invoices?limit=10&offset=0
+
+### Тариф до и после перехода
+# Ответ: 200, версия с valid_to="2026-11-01 00:00:00"
+GET {{base}}/tariffs?date=2026-10-31
+
+### Тариф после перехода
+# Ответ: 200, версия с valid_from="2026-11-01 00:00:00"
+GET {{base}}/tariffs?date=2026-11-01
+
+### Замена счётчика
+# Ответ: 201, пустое тело
+POST {{base}}/realty/1/gauges
+Content-Type: application/json
+
+{"gauge_id":2}
